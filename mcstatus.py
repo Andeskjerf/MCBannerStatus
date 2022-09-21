@@ -82,6 +82,7 @@ def main():
 
         arguments = handle_arguments()
         font_size = arguments[ArgType.FONT_SIZE]
+        target = arguments[ArgType.TARGET_PATH]
 
         if not is_image(IMAGE_PATH):
             raise Exception("Invalid image path: " + IMAGE_PATH)
@@ -92,7 +93,7 @@ def main():
 
         canvas = Canvas(IMAGE_PATH, REGULAR_FONT_PATH, ITALIC_FONT_PATH, font_size)
         img = canvas.get_image(status)
-        img.save(arguments[ArgType.TARGET_PATH])
+        img.convert("RGB").save(target)
 
     except Exception as e:
 
