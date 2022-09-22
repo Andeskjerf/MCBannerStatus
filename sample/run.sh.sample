@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source env/bin/activate
+python mcstatus.py -t /save/to/path

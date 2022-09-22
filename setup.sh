@@ -18,3 +18,5 @@ python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 cp sample/conf.py.sample src/conf.py
+cp sample/run.sh.sample run.sh
+chmod +x run.sh
