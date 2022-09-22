@@ -33,7 +33,7 @@ class Status:
                 res = mcr.command("list").splitlines(keepends=False)
                 nums = re.findall(r"[0-9]+", res[0])
 
-                if len(nums) == 2:
+                if len(nums) >= 2:
                     self.data.online_players = int(nums[0])
                     self.data.max_players = int(nums[1])
                     self.data.active = True
