@@ -65,7 +65,7 @@ The repo comes with a bash script to launch the program. To use it, make sure to
 #!/bin/bash
 
 source env/bin/activate
-python mcstatus.py -t /save/to/path
+python main.py -t /save/to/path
 ```
 
 Invoke with `--help` or no arguments to learn more.
