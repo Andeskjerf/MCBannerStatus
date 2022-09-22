@@ -127,6 +127,11 @@ def main():
 
     status = Status()
 
+    # Only update the image if there's any new data
+    if not status.updated:
+        print("No new data, skipping")
+        exit()
+
     try:
 
         arguments = handle_arguments()
