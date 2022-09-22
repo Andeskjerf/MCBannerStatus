@@ -57,27 +57,23 @@ def handle_arguments():
 
     for arg in args:
 
-        if arg == "-s" or arg == "--font-size":
-            looking_for = ArgType.FONT_SIZE
-            continue
-
-        elif arg == "-t" or arg == "--target":
-            looking_for = ArgType.TARGET_PATH
-            continue
-
-        elif arg == "-o" or arg == "--offset":
-            looking_for = ArgType.X_OFFSET
-            continue
+        match arg:
+            case "-s" | "--font-size":
+                looking_for = ArgType.FONT_SIZE
+                continue
+            case "-t" | "--target":
+                looking_for = ArgType.TARGET_PATH
+                continue
+            case "-x" | "--x-offset":
+                looking_for = ArgType.X_OFFSET
+                continue
 
         match looking_for:
-            case ArgType.FONT_SIZE:
+            case ArgType.FONT_SIZE | ArgType.X_OFFSET:
                 result[looking_for] = int(arg)
 
             case ArgType.TARGET_PATH:
                 result[looking_for] = arg
-
-            case ArgType.X_OFFSET:
-                result[looking_for] = int(arg)
 
         looking_for = None
 
