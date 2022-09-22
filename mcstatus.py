@@ -127,11 +127,6 @@ def main():
 
     status = Status()
 
-    # Only update the image if there's any new data
-    if not status.updated:
-        print("No new data, skipping")
-        exit()
-
     try:
 
         arguments = handle_arguments()
@@ -144,6 +139,11 @@ def main():
         if not has_valid_extension(target):
             raise Exception(f"Invalid image extension: {target}\n"
                             "Valid extensions: " + ", ".join(VALID_EXTENSIONS))
+
+        # Only update the image if there's any new data
+        if not status.updated:
+            print("No new data, skipping")
+            exit()
 
         Canvas(
             status,
