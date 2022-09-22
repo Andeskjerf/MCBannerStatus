@@ -1,5 +1,5 @@
 # MCBannerStatus
-Generates an image containing various data about a running Minecraft server using RCON and the library MCRcon.
+Generates an image containing various data about a running Minecraft server.
 
 Intended to be run in combination with a web server to provide live updates to a served image.
 
@@ -28,11 +28,9 @@ Before running the program, `src/conf.py` needs to be configured.
 
 ```Python
 
-# Uses the MCRcon library to get data from the server
-# Make sure RCON is enabled on the server!
-MCRCON_PASSWORD = "password"
-MCRCON_HOST = "127.0.0.1"
-MCRCON_PORT = 25575
+# Can be left as is unless you want the status for a remote server
+SERVER_HOST = "127.0.0.1"
+SERVER_PORT = 25565
 
 # Image and font to use, required
 IMAGE_PATH = ""

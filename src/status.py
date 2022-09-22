@@ -1,18 +1,19 @@
-import re
 import json
-from mcrcon import MCRcon
-from .conf import MCRCON_HOST, MCRCON_PASSWORD, MCRCON_PORT
+from mcstatus import JavaServer
+from .conf import SERVER_HOST, SERVER_PORT
 
 
 class Data:
 
     max_players: int = 0
     online_players: int = 0
+    version: str = None
     active: bool = False
 
-    def __init__(self, max_players, online_players, active):
+    def __init__(self, max_players, online_players, version, active):
         self.max_players = max_players
         self.online_players = online_players
+        self.version = version
         self.active = active
 
     def to_json(self):
@@ -21,7 +22,7 @@ class Data:
 
 class Status:
 
-    data: Data = Data(0, 0, False)
+    data: Data = Data(0, 0, None, False)
     cache: str = None
     updated = False
 
@@ -29,17 +30,14 @@ class Status:
         self.read_cache()
 
         try:
-            with MCRcon(MCRCON_HOST, MCRCON_PASSWORD, port=MCRCON_PORT) as mcr:
-                res = mcr.command("list").splitlines(keepends=False)
-                nums = re.findall(r"[0-9]+", res[0])
+            status = JavaServer(SERVER_HOST, SERVER_PORT).status()
+            self.data.online_players = status.players.online
+            self.data.max_players = status.players.max
+            self.data.version = status.version.name
+            self.data.active = True
 
-                if len(nums) >= 2:
-                    self.data.online_players = int(nums[0])
-                    self.data.max_players = int(nums[1])
-                    self.data.active = True
-                else:
-                    raise Exception("Could not parse player count")
-        except:
+        except Exception as e:
+            print(e)
             self.data.online_players = 0
             self.data.max_players = 0
             self.data.active = False
