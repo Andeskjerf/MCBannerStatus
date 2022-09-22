@@ -24,12 +24,10 @@ class Status:
         except:
             self.active = False
 
-
     def get_player_count(self):
         if not self.active:
             return "Unable to establish connection"
         return f"{self.online_players} / {self.max_players}"
-
 
     def get_status(self):
         if not self.active:

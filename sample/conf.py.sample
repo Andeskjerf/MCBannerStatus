@@ -12,9 +12,18 @@ REGULAR_FONT_PATH = ""
 ITALIC_FONT_PATH = ""
 
 # The offset between the edge of the image and the text
-# Can be adjusted here or via runtime arguments
+# Can be set here or via runtime arguments
 X_OFFSET = 64
 
 # The size to use for fonts
-# Can be adjusted here or via runtime arguments
+# Can be set here or via runtime arguments
 FONT_SIZE = 64
+
+# The height of the text field drawed onto the image
+# If not set, the height will be the image's height divided by 6
+# Can be set here or via runtime arguments
+FIELD_HEIGHT = None
+
+# The opacity of the field
+# Can be set here or via runtime arguments
+FIELD_OPACITY = 0.5
