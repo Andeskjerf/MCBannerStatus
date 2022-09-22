@@ -4,7 +4,7 @@ import re
 import sys
 
 from src import Canvas, Status
-from src.conf import IMAGE_PATH, ITALIC_FONT_PATH, REGULAR_FONT_PATH
+from src.conf import FONT_SIZE, IMAGE_PATH, ITALIC_FONT_PATH, REGULAR_FONT_PATH, X_OFFSET
 
 
 class ArgType(Enum):
@@ -30,9 +30,9 @@ def file_exists(path: str):
 
 def handle_arguments():
     result = {
-        ArgType.FONT_SIZE: 64,
+        ArgType.FONT_SIZE: FONT_SIZE,
         ArgType.TARGET_PATH: None,
-        ArgType.X_OFFSET: 64
+        ArgType.X_OFFSET: X_OFFSET
         }
 
     name = re.findall(r"[^\/]+\b$", sys.argv[0])[0]
