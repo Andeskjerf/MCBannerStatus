@@ -3,3 +3,4 @@ __pycache__
 .vscode
 src/conf.py
 run.sh
+cache.json
