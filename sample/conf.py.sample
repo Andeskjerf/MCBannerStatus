@@ -1,9 +1,19 @@
+# Required
 MCRCON_PASSWORD = "password"
 MCRCON_HOST = "127.0.0.1"
 MCRCON_PORT = 25575
 
+# Image and font to use as a base
 IMAGE_PATH = ""
 REGULAR_FONT_PATH = ""
 
-# OPTIONAL
+# Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
+
+# The offset between the edge of the image and the text
+# Can be adjusted here or via runtime arguments
+X_OFFSET = 64
+
+# The size to use for fonts
+# Can be adjusted here or via runtime arguments
+FONT_SIZE = 64
