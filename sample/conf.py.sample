@@ -1,9 +1,10 @@
-# Required
+# Uses the MCRcon library to get data from the server
+# Make sure RCON is enabled on the server!
 MCRCON_PASSWORD = "password"
 MCRCON_HOST = "127.0.0.1"
 MCRCON_PORT = 25575
 
-# Image and font to use as a base
+# Image and font to use, required
 IMAGE_PATH = ""
 REGULAR_FONT_PATH = ""
 
