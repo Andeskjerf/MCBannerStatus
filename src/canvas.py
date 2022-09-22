@@ -1,25 +1,33 @@
 from PIL import Image, ImageDraw, ImageFont
+
+from .status import Status
 from .colors import GREEN, RED, WHITE, GREY, BLACK
 
 
 class Canvas:
 
-    DIVIDE_BY_HEIGHT = 6
+    DIVIDE_BY_HEIGHT: int = 6
 
     image: Image
     field_transparency: float = 0.5
     field_height: float
     font_regular: ImageFont
     font_italic: ImageFont
+    x_offset: int
 
-    def __init__(self, image_path: str, font_regular: str, font_italic: str, font_size: int):
+    def __init__(self, status: Status, image_path: str, font_regular: str, font_italic: str, font_size: int, x_offset: int):
         self.image = Image.open(image_path).convert("RGBA")
         self.field_height = self.image.height / self.DIVIDE_BY_HEIGHT
         self.font_regular = ImageFont.truetype(font_regular, font_size)
+
         if len(font_italic) == 0:
             self.font_italic = self.font_regular
         else:
             self.font_italic = ImageFont.truetype(font_italic, font_size)
+
+        self.x_offset = x_offset
+
+        self.draw_image(status)
 
 
     def draw_overlay(self):
@@ -44,9 +52,8 @@ class Canvas:
         text_right_h = self.font_regular.getbbox(text_right)[3]
 
         y_offset = self.image.height - (self.field_height / 2) - (text_right_h / 2)
-        x_offset = 64
-        bottom_right = (self.image.width - x_offset - text_right_w, y_offset)
-        bottom_left = (x_offset, y_offset)
+        bottom_right = (self.image.width - self.x_offset - text_right_w, y_offset)
+        bottom_left = (self.x_offset, y_offset)
 
 
         draw.text(
@@ -64,7 +71,10 @@ class Canvas:
         )
 
 
-    def get_image(self, status):
+    def draw_image(self, status):
         self.image = self.draw_overlay()
         self.draw_text(status)
-        return self.image
+
+
+    def save_image(self, target_path: str):
+        self.image.convert("RGB").save(target_path)
