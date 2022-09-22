@@ -38,11 +38,19 @@ def handle_arguments():
     name = re.findall(r"[^\/]+\b$", sys.argv[0])[0]
     args = sys.argv[1:]
 
-    if len(args) < 2:
+    if len(args) < 2 or \
+        "--help" in args or \
+        "-h" in args or \
+        "-t" not in args:
+
+        if "-t" not in args:
+            print("Missing target path argument")
+
         print(f"Usage: {name} [options] -t path\n"
               "    -s --font-size <size>\tFont size for the text\n"
               "    -t --target <path>\t\tPath to save the image to\n"
-              "    -x --x-offset <offset>\tOffset from the edges of the image\n")
+              "    -x --x-offset <offset>\tText offset from the edges of the image\n"
+              "    -h --help\t\t\tShow this help message\n")
         exit()
 
     looking_for = None
