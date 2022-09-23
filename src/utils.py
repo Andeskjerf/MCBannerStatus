@@ -15,11 +15,15 @@ def is_float(string: str):
 
 
 def is_image(path: str):
+    if not path:
+        raise Exception("Image path not specified")
     res = re.findall(r"\.(png|jpg|jpeg|bmp)$", path.lower())
     return len(res) > 0
 
 
 def is_font(path: str):
+    if not path:
+        raise Exception("Font path not specified")
     res = re.findall(r"\.(ttf|otf)$", path.lower())
     return len(res) > 0
 

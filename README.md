@@ -26,46 +26,55 @@ The `setup.sh` script will setup the project for you.
 
 Before running the program, `src/conf.py` needs to be configured.
 
+Alternatively, you can pass the appropriate values via arguments instead.
+
 ```Python
+# All of these can either be set here or via runtime arguments
+# If arguments are given, they'll override the respective values set here
 
 # Can be left as is unless you want the status for a remote server
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 25565
 
-# Image and font to use, required
+# Image and font to use
 IMAGE_PATH = ""
 REGULAR_FONT_PATH = ""
+
+# Path to save the output image
+TARGET_PATH = ""
 
 # Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
 
 # The offset between the edge of the image and the text
-# Can be set here or via runtime arguments
 X_OFFSET = 64
 
 # The size to use for fonts
-# Can be set here or via runtime arguments
 FONT_SIZE = 64
 
 # The height of the text field drawed onto the image
 # If not set, the height will be the image's height divided by 6
-# Can be set here or via runtime arguments
 FIELD_HEIGHT = None
 
 # The opacity of the field
-# Can be set here or via runtime arguments
 FIELD_OPACITY = 0.5
+
+# The text to show if the server is online
+ONLINE_TEXT = "Online"
+
+# The text to show if the server is unreachable / offline
+OFFLINE_TEXT = "Offline"
 ```
 
 ## Running
 
-The repo comes with a bash script to launch the program. To use it, make sure to set a valid path in `run.sh`
+The repo comes with a bash script to launch the program.
 
 ```Bash
 #!/bin/bash
 
 source env/bin/activate
-python main.py -t /save/to/path
+python main.py
 ```
 
 Invoke with `--help` or no arguments to learn more.

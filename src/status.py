@@ -1,6 +1,5 @@
 import json
 from mcstatus import JavaServer
-from .conf import SERVER_HOST, SERVER_PORT
 
 
 class Data:
@@ -26,11 +25,30 @@ class Status:
     cache: str = None
     updated = False
 
-    def __init__(self):
+    host: str
+    port: int
+
+    online_text: str
+    offline_text: str
+    player_failed_text: str
+
+    def __init__(
+            self,
+            host,
+            port,
+            online_text,
+            offline_text,
+            player_failed_text
+    ):
+        self.host = host
+        self.port = port
+        self.online_text = online_text
+        self.offline_text = offline_text
+        self.player_failed_text = player_failed_text
         self.read_cache()
 
         try:
-            status = JavaServer(SERVER_HOST, SERVER_PORT).status()
+            status = JavaServer(self.host, self.port).status()
             self.data.online_players = status.players.online
             self.data.max_players = status.players.max
             self.data.version = status.version.name
@@ -48,13 +66,13 @@ class Status:
 
     def get_player_count(self):
         if not self.data.active:
-            return "Unable to establish connection"
+            return self.player_failed_text
         return f"{self.data.online_players} / {self.data.max_players}"
 
     def get_status(self):
         if not self.data.active:
-            return "Offline"
-        return "Online"
+            return self.offline_text
+        return self.online_text
 
     def has_changed(self):
         return self.data.to_json() != self.cache
