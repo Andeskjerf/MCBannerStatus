@@ -64,6 +64,9 @@ ONLINE_TEXT = "Online"
 
 # The text to show if the server is unreachable / offline
 OFFLINE_TEXT = "Offline"
+
+# Text to show inplace of the player count if the server is unreachable / offline
+PLAYER_COUNT_OFFLINE_TEXT = "Unable to establish connection"
 ```
 
 ## Running
