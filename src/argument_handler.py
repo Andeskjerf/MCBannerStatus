@@ -69,8 +69,8 @@ class ArgumentHandler:
             print(f"Usage: {self.name} [options]\n"
                   "    Paths:\n"
                   "        -b --image <path>\t\tPath to base image\n"
-                  "        -i --font-regular <path>\tPath to regular font\n"
-                  "        -r --font-italic <path>\t\tPath to italic font\n"
+                  "        -r --font-regular <path>\tPath to regular font\n"
+                  "        -i --font-italic <path>\t\tPath to italic font\n"
                   "        -t --target <path>\t\tPath to save the image to\n"
                   "\n"
                   "    Text:\n"
@@ -119,9 +119,9 @@ class ArgumentHandler:
                     self.offline_text = self.next_arg(i)
                 case "-b" | "--image":
                     self.image_path = self.next_arg(i)
-                case "-i" | "--font-regular":
+                case "-r" | "--font-regular":
                     self.font_regular_path = self.next_arg(i)
-                case "-r" | "--font-italic":
+                case "-i" | "--font-italic":
                     self.font_italic_path = self.next_arg(i)
                 case "-p" | "--player-text":
                     self.player_offline_text = self.next_arg(i)
