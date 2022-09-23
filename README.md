@@ -77,7 +77,7 @@ The repo comes with a bash script to launch the program.
 #!/bin/bash
 
 source env/bin/activate
-python main.py
+python main.py $1
 ```
 
 Invoke with `--help` or no arguments to learn more.
