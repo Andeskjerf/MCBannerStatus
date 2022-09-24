@@ -58,8 +58,8 @@ class Cacher:
     def has_changed(self):
         cache_dict: dict = json.loads(self.cache)
         data_dict: dict = json.loads(self.data.to_json())
-        cache_dict.pop("last_update")
-        data_dict.pop("last_update")
+        cache_dict.pop("last_image")
+        data_dict.pop("last_image")
         return data_dict != cache_dict
 
     def write_cache(self):

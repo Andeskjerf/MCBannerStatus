@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 
 from src import utils
@@ -15,16 +16,20 @@ class ImageRotator:
     def __init__(
         self,
         cache,
-        enabled
+        enabled,
+        interval
     ) -> None:
         self.cache = cache
-        self.enabled = enabled
 
         if enabled:
-            self.set_files()
-            self.set_image()
-        else:
-            self.cache.last_image = None
+            then = cache.last_update
+            now = datetime.now()
+            difference = (now - then).total_seconds()
+
+            if difference > interval:
+                self.cache.last_update = now
+                self.set_files()
+                self.set_image()
 
     def set_files(self):
         for root, _, files in os.walk(self.path):

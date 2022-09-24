@@ -1,3 +1,4 @@
+from datetime import datetime
 from src import Canvas, Status
 from src.argument_handler import ArgumentHandler
 from src.data_cache import Cacher
@@ -21,13 +22,23 @@ def main():
 
     ImageRotator(
         cache.data,
-        args.image_rotation
+        args.image_rotation,
+        args.image_rotation_interval
     )
 
+    # If image rotation is disabled and the cache contains data about it,
+    # make sure to remove it and trigger an update by setting last_update
+    if not args.image_rotation \
+            and cache.data.last_image:
+        cache.data.last_image = None
+        cache.data.last_update = datetime.now()
+
+    # Write data to cache only if it has changed
     updated = cache.has_changed()
     if updated:
         cache.write_cache()
 
+    # Replace whatever image has been given if image rotation is enabled
     if cache.data.last_image:
         args.image_path = cache.data.last_image
 
