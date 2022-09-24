@@ -31,7 +31,7 @@ class ArgumentHandler:
     port: int = SERVER_PORT
 
     x_offset: float = X_OFFSET or 64
-    height: float = FIELD_HEIGHT
+    height: int = int(FIELD_HEIGHT)
     opacity: float = FIELD_OPACITY if FIELD_OPACITY is not None else 0.5
 
     image_path: str = IMAGE_PATH
@@ -112,7 +112,7 @@ class ArgumentHandler:
                 case "-x" | "--x-offset":
                     self.x_offset = self.parse_float(self.next_arg(i), arg)
                 case "-h" | "--height":
-                    self.height = self.parse_float(self.next_arg(i), arg)
+                    self.height = self.parse_int(self.next_arg(i), arg)
                 case "-o" | "--opacity":
                     self.opacity = self.parse_float(self.next_arg(i), arg)
                 case "-a" | "--online-text":
@@ -132,10 +132,7 @@ class ArgumentHandler:
                 case "--port":
                     self.port = self.parse_int(self.next_arg(i), arg)
                 case "--interval":
-                    self.image_rotation_interval = self.parse_int(
-                        self.next_arg(i),
-                        arg
-                    )
+                    self.image_rotation_interval = self.parse_int(self.next_arg(i), arg)
                 case "--images":
                     self.image_rotation = True
                     matched = False
