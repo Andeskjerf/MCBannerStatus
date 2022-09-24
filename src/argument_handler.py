@@ -32,7 +32,7 @@ class ArgumentHandler:
 
     x_offset: float = X_OFFSET or 64
     height: float = FIELD_HEIGHT
-    opacity: float = FIELD_OPACITY or 0.5
+    opacity: float = FIELD_OPACITY if FIELD_OPACITY is not None else 0.5
 
     image_path: str = IMAGE_PATH
     image_rotation: bool = IMAGE_ROTATION or False
