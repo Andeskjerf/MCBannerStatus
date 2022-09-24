@@ -47,7 +47,11 @@ class Cacher:
             setattr(self.data, k, v)
 
     def has_changed(self):
-        return self.data.to_json() != self.cache
+        cache_dict: dict = json.loads(self.cache)
+        data_dict: dict = json.loads(self.data.to_json())
+        cache_dict.pop("last_update")
+        data_dict.pop("last_update")
+        return data_dict != cache_dict
 
     def write_cache(self):
         with open("cache.json", "w") as f:
