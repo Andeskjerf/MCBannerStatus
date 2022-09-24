@@ -19,11 +19,17 @@ def main():
         args.player_offline_text
     )
 
-    ImageRotator()
+    ImageRotator(
+        cache.data,
+        args.image_rotation
+    )
 
     updated = cache.has_changed()
     if updated:
         cache.write_cache()
+
+    if cache.data.last_image:
+        args.image_path = cache.data.last_image
 
     # Only update the image if there's any new data
     if not updated and not args.force_update:
