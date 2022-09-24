@@ -19,6 +19,7 @@ The `setup.sh` script will setup the project for you.
  - Checks for a valid Python version
  - Creates a Python venv
  - Installs required dependencies
+ - Creates `images`
  - Adds `src/conf.py`
  - Adds `run.sh`
 
