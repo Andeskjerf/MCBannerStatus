@@ -40,6 +40,11 @@ class ImageRotator:
                     if len(self.files_path) > 1:
                         self.cache.last_update = now
 
+                else:
+                    print("Time left until next image rotation: \n"
+                          f"    {int(difference)} second(s)\n"
+                          f"    {round(difference / 60, 1)} minute(s)\n")
+
     def set_files(self):
         for root, _, files in os.walk(self.path):
             for file in sorted(files):
