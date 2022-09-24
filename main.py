@@ -19,6 +19,8 @@ def main():
         args.player_offline_text
     )
 
+    ImageRotator()
+
     updated = cache.has_changed()
     if updated:
         cache.write_cache()
@@ -27,8 +29,6 @@ def main():
     if not updated and not args.force_update:
         print("No new data, skipping")
         exit()
-
-    ImageRotator()
 
     Canvas(
         status,
