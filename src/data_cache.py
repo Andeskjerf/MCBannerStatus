@@ -8,7 +8,7 @@ class DataCache:
     online_players: int = 0
     version: str = None
     active: bool = False
-    image: str = None
+    last_image: str = None
     last_update: datetime = None
 
     def __init__(
@@ -17,15 +17,21 @@ class DataCache:
         online_players,
         version,
         active,
-        image=None,
-        last_update=datetime.now()
+        last_image,
+        last_update
     ):
         self.max_players = max_players
         self.online_players = online_players
         self.version = version
         self.active = active
-        self.image = image
-        self.last_update = last_update
+        self.last_image = last_image
+        self.last_update = self.parse_datetime(last_update)
+
+    def parse_datetime(self, obj):
+        if isinstance(obj, datetime):
+            return obj
+        else:
+            return datetime.fromtimestamp(obj)
 
     def to_json(self):
         return json.dumps(self, default=self.json_default)
@@ -39,7 +45,7 @@ class DataCache:
 
 class Cacher:
 
-    data: DataCache = DataCache(0, 0, None, False)
+    data: DataCache
     cache: str = None
 
     def __init__(self) -> None:
@@ -65,8 +71,16 @@ class Cacher:
             with open("cache.json", "r") as f:
                 self.cache = f.read()
 
+                # Check if the cache is valid
+                json.loads(self.cache)
+                if len(self.cache) == 0:
+                    raise Exception("Cache is empty")
+
         except Exception as e:
             print(e)
             with open("cache.json", "w") as f:
+                self.data.last_update = datetime.now()
                 self.cache = self.data.to_json()
                 f.write(self.cache)
+
+        self.data = DataCache(**json.loads(self.cache))
