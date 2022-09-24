@@ -1,18 +1,51 @@
 import os
 
+from src import utils
+from src.data_cache import DataCache
+
 
 class ImageRotator:
 
     path: str = f"{os.getcwd()}/images"
     files_path: list = []
 
-    def __init__(self) -> None:
-        self.set_files()
-        pass
+    cache: DataCache = None
+    enabled: bool = False
+
+    def __init__(
+        self,
+        cache,
+        enabled
+    ) -> None:
+        self.cache = cache
+        self.enabled = enabled
+
+        if enabled:
+            self.set_files()
+            self.set_image()
+        else:
+            self.cache.last_image = None
 
     def set_files(self):
-        for root, dirs, files in os.walk(self.path):
-            for file in files:
-                self.files_path.append(os.path.join(root, file))
+        for root, _, files in os.walk(self.path):
+            for file in sorted(files):
+                path = os.path.join(root, file)
+                if utils.has_valid_extension(path):
+                    self.files_path.append(path)
+                else:
+                    print("Invalid file extension: " + file)
 
-        print(self.files_path)
+    def set_image(self):
+        if len(self.files_path) == 0:
+            raise Exception("No images found in " + self.path)
+
+        try:
+            index = self.files_path.index(self.cache.last_image)
+        except ValueError:
+            index = None
+
+        if index is not None \
+                and index + 1 < len(self.files_path):
+            self.cache.last_image = self.files_path[index + 1]
+        else:
+            self.cache.last_image = self.files_path[0]
