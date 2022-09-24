@@ -11,7 +11,6 @@ _DIVIDE_BY_HEIGHT: int = 6
 
 class Canvas:
 
-    favicon: Image
     image: Image
 
     field_opacity: float
