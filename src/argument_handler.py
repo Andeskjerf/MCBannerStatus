@@ -20,14 +20,6 @@ from src.conf import (
     IMAGE_ROTATION
 )
 
-VALID_EXTENSIONS = [
-    "png",
-    "jpg",
-    "jpeg",
-    "bmp",
-    "webp"
-]
-
 
 class ArgumentHandler:
 
@@ -168,12 +160,9 @@ class ArgumentHandler:
                 and not utils.is_font(self.font_italic_path):
             raise Exception("Invalid font path: " + self.font_italic_path)
 
-        if not self.has_valid_extension(self.target):
+        if not utils.has_valid_extension(self.target):
             raise Exception(f"Invalid image extension: {self.target}\n"
-                            "Valid extensions: " + ", ".join(VALID_EXTENSIONS))
-
-    def has_valid_extension(self, path: str) -> bool:
-        return path.lower().endswith(tuple(VALID_EXTENSIONS))
+                            "Valid extensions: " + ", ".join(utils.VALID_EXTENSIONS))
 
     def next_arg(self, i: int) -> str:
         if len(self.args) > i + 1:
