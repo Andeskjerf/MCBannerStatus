@@ -75,15 +75,15 @@ class Canvas:
         draw.text(
             bottom_left,
             status.get_status(),
-            GREEN if status.data.active else RED,
+            GREEN if status.cache.active else RED,
             font=self.font_regular
         )
 
         draw.text(
             bottom_right,
             text_right,
-            WHITE if status.data.active else GREY,
-            font=self.font_regular if status.data.active else self.font_italic
+            WHITE if status.cache.active else GREY,
+            font=self.font_regular if status.cache.active else self.font_italic
         )
 
     def draw_image(self, status):

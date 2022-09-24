@@ -51,10 +51,6 @@ class Cacher:
     def __init__(self) -> None:
         self.read_cache()
 
-    def update(self, **kwargs):
-        for k, v in kwargs.items():
-            setattr(self.data, k, v)
-
     def has_changed(self):
         cache_dict: dict = json.loads(self.cache)
         data_dict: dict = json.loads(self.data.to_json())

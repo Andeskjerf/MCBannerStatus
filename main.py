@@ -12,7 +12,7 @@ def main():
     cache = Cacher()
 
     status = Status(
-        cache,
+        cache.data,
         args.host,
         args.port,
         args.online_text,
