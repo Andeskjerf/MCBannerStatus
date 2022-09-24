@@ -17,7 +17,8 @@ from src.conf import (
     SERVER_PORT,
     X_OFFSET,
     TARGET_PATH,
-    IMAGE_ROTATION
+    IMAGE_ROTATION,
+    IMAGE_ROTATION_INTERVAL
 )
 
 
@@ -35,6 +36,7 @@ class ArgumentHandler:
 
     image_path: str = IMAGE_PATH
     image_rotation: bool = IMAGE_ROTATION or False
+    image_rotation_interval: int = IMAGE_ROTATION_INTERVAL or 900
     target: str = TARGET_PATH or ""
 
     font_size: int = FONT_SIZE or 64
@@ -67,6 +69,7 @@ class ArgumentHandler:
             print(f"Usage: {self.name} [options]\n"
                   "    Paths:\n"
                   "        --images\t\t\tEnable image rotation using images folder\n"
+                  "        --interval <sec>\t\tHow often should the image be rotated out, in seconds\n"
                   "        -b --image <path>\t\tPath to base image\n"
                   "        -r --font-regular <path>\tPath to regular font\n"
                   "        -i --font-italic <path>\t\tPath to italic font\n"
@@ -128,6 +131,11 @@ class ArgumentHandler:
                     self.host = self.next_arg(i)
                 case "--port":
                     self.port = self.parse_int(self.next_arg(i), arg)
+                case "--interval":
+                    self.image_rotation_interval = self.parse_int(
+                        self.next_arg(i),
+                        arg
+                    )
                 case "--images":
                     self.image_rotation = True
                     matched = False
