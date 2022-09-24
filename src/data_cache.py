@@ -6,6 +6,8 @@ class DataCache:
 
     max_players: int = 0
     online_players: int = 0
+    description: str = None
+    favicon: str = None
     version: str = None
     active: bool = False
     last_image: str = None
@@ -15,6 +17,8 @@ class DataCache:
         self,
         max_players,
         online_players,
+        description,
+        favicon,
         version,
         active,
         last_image,
@@ -22,12 +26,16 @@ class DataCache:
     ):
         self.max_players = max_players
         self.online_players = online_players
+        self.description = description
+        self.favicon = favicon
         self.version = version
         self.active = active
         self.last_image = last_image
         self.last_update = self.parse_datetime(last_update)
 
     def parse_datetime(self, obj):
+        if not obj:
+            return datetime.now()
         if isinstance(obj, datetime):
             return obj
         else:
@@ -45,7 +53,7 @@ class DataCache:
 
 class Cacher:
 
-    data: DataCache
+    data: DataCache = DataCache(0, 0, None, None, None, False, None, None)
     cache: str = None
 
     def __init__(self) -> None:
