@@ -35,7 +35,7 @@ class Status:
             self.cache.max_players = status.players.max
             self.cache.online_players = status.players.online
             self.cache.description = status.description
-            self.cache.favicon = status.favicon
+            self.cache.favicon = status.favicon.replace("data:image/png;base64,", "")
             self.cache.version = status.version.name
             self.cache.active = True
 
