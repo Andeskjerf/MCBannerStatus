@@ -8,6 +8,7 @@ class DataCache:
     online_players: int = 0
     version: str = None
     active: bool = False
+    image: str = None
     last_update: datetime = None
 
     def __init__(
@@ -16,12 +17,14 @@ class DataCache:
         online_players,
         version,
         active,
+        image=None,
         last_update=datetime.now()
     ):
         self.max_players = max_players
         self.online_players = online_players
         self.version = version
         self.active = active
+        self.image = image
         self.last_update = last_update
 
     def to_json(self):
