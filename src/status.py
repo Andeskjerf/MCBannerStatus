@@ -34,6 +34,8 @@ class Status:
             status = JavaServer(self.host, self.port).status()
             self.cache.max_players = status.players.max
             self.cache.online_players = status.players.online
+            self.cache.description = status.description
+            self.cache.favicon = status.favicon
             self.cache.version = status.version.name
             self.cache.active = True
 
