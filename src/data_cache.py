@@ -16,7 +16,7 @@ class DataCache:
         online_players,
         version,
         active,
-        last_update=None
+        last_update=datetime.now()
     ):
         self.max_players = max_players
         self.online_players = online_players
