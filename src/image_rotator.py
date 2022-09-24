@@ -24,15 +24,21 @@ class ImageRotator:
         if enabled:
             then = cache.last_update
             now = datetime.now()
-            difference = (now - then).total_seconds()
 
-            if difference > interval:
+            if not then:
                 self.set_files()
                 self.set_image()
+                self.cache.last_update = now
+            else:
+                difference = (now - then).total_seconds()
 
-                # No need to update the image if only a single image is present
-                if len(self.files_path) > 1:
-                    self.cache.last_update = now
+                if difference > interval:
+                    self.set_files()
+                    self.set_image()
+
+                    # No need to update the image if only a single image is present
+                    if len(self.files_path) > 1:
+                        self.cache.last_update = now
 
     def set_files(self):
         for root, _, files in os.walk(self.path):

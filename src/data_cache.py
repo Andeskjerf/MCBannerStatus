@@ -35,7 +35,7 @@ class DataCache:
 
     def parse_datetime(self, obj):
         if not obj:
-            return datetime.now()
+            return None
         if isinstance(obj, datetime):
             return obj
         else:
@@ -83,7 +83,6 @@ class Cacher:
         except Exception as e:
             print(e)
             with open("cache.json", "w") as f:
-                self.data.last_update = datetime.now()
                 self.cache = self.data.to_json()
                 f.write(self.cache)
 
