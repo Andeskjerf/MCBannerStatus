@@ -1,12 +1,17 @@
 from src import Canvas, Status
 from src.argument_handler import ArgumentHandler
+from src.data_cache import Cacher
+from src.image_rotator import ImageRotator
 
 
 def main():
 
     args = ArgumentHandler()
 
+    cache = Cacher()
+
     status = Status(
+        cache,
         args.host,
         args.port,
         args.online_text,
@@ -14,10 +19,16 @@ def main():
         args.player_offline_text
     )
 
+    updated = cache.has_changed()
+    if updated:
+        cache.write_cache()
+
     # Only update the image if there's any new data
-    if not status.updated and not args.force_update:
+    if not updated and not args.force_update:
         print("No new data, skipping")
         exit()
+
+    ImageRotator()
 
     Canvas(
         status,
