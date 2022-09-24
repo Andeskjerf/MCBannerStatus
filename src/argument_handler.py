@@ -16,7 +16,8 @@ from src.conf import (
     SERVER_HOST,
     SERVER_PORT,
     X_OFFSET,
-    TARGET_PATH
+    TARGET_PATH,
+    IMAGE_ROTATION
 )
 
 VALID_EXTENSIONS = [
@@ -36,17 +37,22 @@ class ArgumentHandler:
     host: str = SERVER_HOST
     port: int = SERVER_PORT
 
-    font_size: int = FONT_SIZE or 64
-    target: str = TARGET_PATH or ""
     x_offset: float = X_OFFSET or 64
     height: float = FIELD_HEIGHT
     opacity: float = FIELD_OPACITY or 0.5
+
     image_path: str = IMAGE_PATH
+    image_rotation: bool = IMAGE_ROTATION or False
+    target: str = TARGET_PATH or ""
+
+    font_size: int = FONT_SIZE or 64
     font_regular_path: str = REGULAR_FONT_PATH
     font_italic_path: str = ITALIC_FONT_PATH or ""
+
     online_text: str = ONLINE_TEXT or "NOT SET"
     offline_text: str = OFFLINE_TEXT or "NOT SET"
     player_offline_text: str = PLAYER_COUNT_OFFLINE_TEXT or "NOT SET"
+
     force_update: bool = False
 
     def __init__(self) -> None:
@@ -68,6 +74,7 @@ class ArgumentHandler:
 
             print(f"Usage: {self.name} [options]\n"
                   "    Paths:\n"
+                  "        --images\t\t\tEnable image rotation using images folder\n"
                   "        -b --image <path>\t\tPath to base image\n"
                   "        -r --font-regular <path>\tPath to regular font\n"
                   "        -i --font-italic <path>\t\tPath to italic font\n"
@@ -129,6 +136,9 @@ class ArgumentHandler:
                     self.host = self.next_arg(i)
                 case "--port":
                     self.port = self.parse_int(self.next_arg(i), arg)
+                case "--images":
+                    self.image_rotation = True
+                    matched = False
                 case "--force":
                     self.force_update = True
                     matched = False
