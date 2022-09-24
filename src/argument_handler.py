@@ -157,7 +157,8 @@ class ArgumentHandler:
                             "Set it with -t, --target or modify conf.py")
 
         # Make sure the paths given are valid
-        if not utils.is_image(self.image_path):
+        if not self.image_rotation \
+                and not utils.is_image(self.image_path):
             raise Exception("Invalid image path: " + self.image_path)
 
         if not utils.is_font(self.font_regular_path):
