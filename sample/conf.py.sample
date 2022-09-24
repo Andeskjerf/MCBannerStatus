@@ -9,6 +9,14 @@ SERVER_PORT = 25565
 IMAGE_PATH = ""
 REGULAR_FONT_PATH = ""
 
+# Set to true to enable image rotation
+# Make sure to add images to the images folder!
+IMAGE_ROTATION = False
+
+# How often should the image be rotated out, in seconds
+# Only applies if image rotation is enabled
+IMAGE_ROTATION_INTERVAL = 900
+
 # Path to save the output image
 TARGET_PATH = ""
 

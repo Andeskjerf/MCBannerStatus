@@ -2,6 +2,15 @@ import os
 import re
 
 
+VALID_EXTENSIONS = [
+    "png",
+    "jpg",
+    "jpeg",
+    "bmp",
+    "webp"
+]
+
+
 def sanitize_float(string: str):
     return re.sub(r"[,]\b", ".", string)
 
@@ -31,3 +40,7 @@ def is_font(path: str):
 def file_exists(path: str) -> None:
     if not os.path.exists(path):
         raise Exception("File does not exist: " + path)
+
+
+def has_valid_extension(path: str) -> bool:
+    return path.lower().endswith(tuple(VALID_EXTENSIONS))

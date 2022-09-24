@@ -14,6 +14,8 @@ if [ $PYTHON_VALID = false ]; then
     exit 1
 fi
 
+mkdir images
+
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt

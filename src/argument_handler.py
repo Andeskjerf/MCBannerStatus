@@ -16,16 +16,10 @@ from src.conf import (
     SERVER_HOST,
     SERVER_PORT,
     X_OFFSET,
-    TARGET_PATH
+    TARGET_PATH,
+    IMAGE_ROTATION,
+    IMAGE_ROTATION_INTERVAL
 )
-
-VALID_EXTENSIONS = [
-    "png",
-    "jpg",
-    "jpeg",
-    "bmp",
-    "webp"
-]
 
 
 class ArgumentHandler:
@@ -36,17 +30,23 @@ class ArgumentHandler:
     host: str = SERVER_HOST
     port: int = SERVER_PORT
 
-    font_size: int = FONT_SIZE or 64
-    target: str = TARGET_PATH or ""
     x_offset: float = X_OFFSET or 64
     height: float = FIELD_HEIGHT
     opacity: float = FIELD_OPACITY or 0.5
+
     image_path: str = IMAGE_PATH
+    image_rotation: bool = IMAGE_ROTATION or False
+    image_rotation_interval: int = IMAGE_ROTATION_INTERVAL or 900
+    target: str = TARGET_PATH or ""
+
+    font_size: int = FONT_SIZE or 64
     font_regular_path: str = REGULAR_FONT_PATH
     font_italic_path: str = ITALIC_FONT_PATH or ""
+
     online_text: str = ONLINE_TEXT or "NOT SET"
     offline_text: str = OFFLINE_TEXT or "NOT SET"
     player_offline_text: str = PLAYER_COUNT_OFFLINE_TEXT or "NOT SET"
+
     force_update: bool = False
 
     def __init__(self) -> None:
@@ -68,6 +68,8 @@ class ArgumentHandler:
 
             print(f"Usage: {self.name} [options]\n"
                   "    Paths:\n"
+                  "        --images\t\t\tEnable image rotation using images folder\n"
+                  "        --interval <sec>\t\tHow often should the image be rotated out, in seconds\n"
                   "        -b --image <path>\t\tPath to base image\n"
                   "        -r --font-regular <path>\tPath to regular font\n"
                   "        -i --font-italic <path>\t\tPath to italic font\n"
@@ -129,6 +131,14 @@ class ArgumentHandler:
                     self.host = self.next_arg(i)
                 case "--port":
                     self.port = self.parse_int(self.next_arg(i), arg)
+                case "--interval":
+                    self.image_rotation_interval = self.parse_int(
+                        self.next_arg(i),
+                        arg
+                    )
+                case "--images":
+                    self.image_rotation = True
+                    matched = False
                 case "--force":
                     self.force_update = True
                     matched = False
@@ -147,7 +157,8 @@ class ArgumentHandler:
                             "Set it with -t, --target or modify conf.py")
 
         # Make sure the paths given are valid
-        if not utils.is_image(self.image_path):
+        if not self.image_rotation \
+                and not utils.is_image(self.image_path):
             raise Exception("Invalid image path: " + self.image_path)
 
         if not utils.is_font(self.font_regular_path):
@@ -157,12 +168,9 @@ class ArgumentHandler:
                 and not utils.is_font(self.font_italic_path):
             raise Exception("Invalid font path: " + self.font_italic_path)
 
-        if not self.has_valid_extension(self.target):
+        if not utils.has_valid_extension(self.target):
             raise Exception(f"Invalid image extension: {self.target}\n"
-                            "Valid extensions: " + ", ".join(VALID_EXTENSIONS))
-
-    def has_valid_extension(self, path: str) -> bool:
-        return path.lower().endswith(tuple(VALID_EXTENSIONS))
+                            "Valid extensions: " + ", ".join(utils.VALID_EXTENSIONS))
 
     def next_arg(self, i: int) -> str:
         if len(self.args) > i + 1:
