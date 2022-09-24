@@ -1,12 +1,12 @@
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+import base64
+import io
+from PIL import Image, ImageFont
+
+from src.elements.row import RowDirection, RowImage, RowText, TextRow
 
 from .colors import GREEN, RED, WHITE, GREY, BLACK
 
 _DIVIDE_BY_HEIGHT: int = 6
-
-_BLUR_RADIUS: int = 8
-_BLUR_COLOR = BLACK
-_BLUR_PASSES = 2
 
 
 class Canvas:
@@ -32,6 +32,9 @@ class Canvas:
     top_right: tuple
     bot_left: tuple
     bot_right: tuple
+
+    bot_left_row: TextRow = TextRow()
+    bot_right_row: TextRow = TextRow(direction=RowDirection.Left)
 
     def __init__(
         self,
@@ -74,73 +77,61 @@ class Canvas:
             self.field_height = int(self.image.height / _DIVIDE_BY_HEIGHT)
 
         self.set_positions()
+
+        self.bot_left_row.pos = self.bot_left
+        self.bot_left_row.add(
+            RowImage(
+                Image.open(io.BytesIO(base64.b64decode(favicon))),
+                font_size + 12
+            )
+        )
+        self.bot_left_row.add(RowText("", self.font_r, WHITE))
+        self.bot_left_row.add(
+            RowText(
+                description,
+                ImageFont.truetype(font_italic, font_size),
+                WHITE
+            )
+        )
+        self.bot_left_row.add(RowText(" ", self.font_r, WHITE))
+        self.bot_left_row.add(RowText(text_left, self.font_l, self.text_l_col))
+
+        self.bot_right_row.pos = self.bot_right
+        self.bot_right_row.add(RowText(text_right, self.font_r, self.text_r_col))
+
         self.draw_image()
 
     def set_positions(self):
-        width = self.image.width
-        height = self.image.height
-
         text_r_w = self.font_r.getbbox(self.text_r)[2]
 
         y_offset = self.field_height / 2
-        right = width - self.x_offset - text_r_w
+        right = self.image.width - self.x_offset - text_r_w
 
         self.top_left = (self.x_offset, y_offset)
         self.top_right = (right, y_offset)
 
-        self.bot_left = (self.x_offset, height - y_offset)
-        self.bot_right = (right, height - y_offset)
+        self.bot_left = (self.x_offset, self.image.height - y_offset)
+        self.bot_right = (right, self.image.height - y_offset)
 
     def draw_overlay(self):
-        width = self.image.width
-        height = self.image.height
         overlay_opacity = int(255 * self.field_opacity)
 
         overlay = Image.new(
             "RGBA",
-            (width, self.field_height),
+            (self.image.width, self.field_height),
             BLACK+(overlay_opacity,)
         )
 
         self.image.paste(
             overlay,
-            (0, height - self.field_height),
+            (0, self.image.height - self.field_height),
             overlay
         )
 
-    def draw_text(self, left_pos, right_pos):
-        blurred = Image.new("RGBA", self.image.size)
-
-        # Draw blurred text until _BLUR_PASSES, then draw normal text
-        i = 0
-        while i <= _BLUR_PASSES:
-            blur = i < _BLUR_PASSES
-            draw = ImageDraw.Draw(blurred if blur else self.image)
-
-            draw.text(
-                left_pos,
-                self.text_l,
-                _BLUR_COLOR if blur else self.text_l_col,
-                anchor="lm",
-                font=self.font_l
-            )
-            draw.text(
-                right_pos,
-                self.text_r,
-                _BLUR_COLOR if blur else self.text_r_col,
-                anchor="lm",
-                font=self.font_r
-            )
-
-            if blur:
-                blurred = blurred.filter(ImageFilter.BoxBlur(_BLUR_RADIUS))
-                self.image.paste(blurred, blurred)
-
-            i += 1
-
     def draw_image(self):
         self.draw_overlay()
-        self.draw_text(self.bot_left, self.bot_right)
+        self.bot_left_row.draw(self.image)
+        self.bot_right_row.draw(self.image)
 
     def save_image(self, target_path: str):
         self.image.convert("RGB").save(target_path)
