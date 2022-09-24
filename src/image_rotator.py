@@ -37,7 +37,9 @@ class ImageRotator:
 
     def set_image(self):
         if len(self.files_path) == 0:
-            raise Exception("No images found in " + self.path)
+            print(f"No images found in {self.path}\n"
+                  "Add some images to the images folder to use this feature")
+            exit()
 
         try:
             index = self.files_path.index(self.cache.last_image)
