@@ -37,9 +37,15 @@ Alternatively, you can pass the appropriate values via arguments instead.
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 25565
 
+# Path to save the output image
+TARGET_PATH = ""
+
 # Image and font to use
 IMAGE_PATH = ""
 REGULAR_FONT_PATH = ""
+
+# Use italic fonts in certain situations, optional
+ITALIC_FONT_PATH = ""
 
 # Set to true to enable image rotation
 # Make sure to add images to the images folder!
@@ -49,24 +55,18 @@ IMAGE_ROTATION = False
 # Only applies if image rotation is enabled
 IMAGE_ROTATION_INTERVAL = 900
 
-# Path to save the output image
-TARGET_PATH = ""
-
-# Use italic fonts in certain situations, optional
-ITALIC_FONT_PATH = ""
-
 # The offset between the edge of the image and the text
 X_OFFSET = 64
 
 # The size to use for fonts
-FONT_SIZE = 64
+FONT_SIZE = 58
 
 # The height of the text field drawed onto the image
 # If not set, the height will be the image's height divided by 6
 FIELD_HEIGHT = None
 
 # The opacity of the field
-FIELD_OPACITY = 0.5
+FIELD_OPACITY = 0.6
 
 # The text to show if the server is online
 ONLINE_TEXT = "Online"
@@ -75,7 +75,8 @@ ONLINE_TEXT = "Online"
 OFFLINE_TEXT = "Offline"
 
 # Text to show inplace of the player count if the server is unreachable / offline
-PLAYER_COUNT_OFFLINE_TEXT = "Unable to establish connection"
+PLAYER_COUNT_OFFLINE_TEXT = "Connection error"
+
 ```
 
 ## Running
