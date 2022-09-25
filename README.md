@@ -3,6 +3,12 @@ Generates an image containing various data about a running Minecraft server.
 
 Intended to be run in combination with a web server to provide live updates to a served image.
 
+#### Examples
+
+![1](https://user-images.githubusercontent.com/6963524/192139657-cc096c36-b3c4-481e-b0bb-9e2470e02120.png)
+![2](https://user-images.githubusercontent.com/6963524/192139697-6f392719-030d-44ec-a69c-3df56f2a758d.png)
+![3](https://user-images.githubusercontent.com/6963524/192139741-918b4ce0-2745-4867-a299-3d908163f593.png)
+
 ## Dependencies
 
  - Python 3.10>=
