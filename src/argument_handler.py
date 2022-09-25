@@ -31,7 +31,7 @@ class ArgumentHandler:
     port: int = SERVER_PORT
 
     x_offset: float = X_OFFSET or 64
-    height: int = int(FIELD_HEIGHT)
+    height: int = int(FIELD_HEIGHT) if FIELD_HEIGHT is not None else None
     opacity: float = FIELD_OPACITY if FIELD_OPACITY is not None else 0.5
 
     image_path: str = IMAGE_PATH
