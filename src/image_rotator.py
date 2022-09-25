@@ -42,8 +42,8 @@ class ImageRotator:
 
                 else:
                     print("Time left until next image rotation: \n"
-                          f"    {int(difference)} second(s)\n"
-                          f"    {round(difference / 60, 1)} minute(s)\n")
+                          f"    {int(interval - difference)} second(s)\n"
+                          f"    {round((interval - difference) / 60, 1)} minute(s)\n")
 
     def set_files(self):
         for root, _, files in os.walk(self.path):
