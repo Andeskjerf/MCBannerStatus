@@ -78,21 +78,24 @@ class Canvas:
         self.set_positions()
 
         self.bot_left_row.pos = self.bot_left
-        self.bot_left_row.add(
-            RowImage(
+
+        if favicon:
+            self.bot_left_row.add(RowImage(
                 Image.open(io.BytesIO(base64.b64decode(favicon))),
                 font_size + 12
+            ))
+            self.bot_left_row.add(RowText("", self.font_r, WHITE))
+
+        if description:
+            self.bot_left_row.add(
+                RowText(
+                    description,
+                    ImageFont.truetype(font_italic, font_size),
+                    WHITE
+                )
             )
-        )
-        self.bot_left_row.add(RowText("", self.font_r, WHITE))
-        self.bot_left_row.add(
-            RowText(
-                description,
-                ImageFont.truetype(font_italic, font_size),
-                WHITE
-            )
-        )
-        self.bot_left_row.add(RowText(" ", self.font_r, WHITE))
+            self.bot_left_row.add(RowText(" ", self.font_r, WHITE))
+
         self.bot_left_row.add(RowText(text_left, self.font_l, self.text_l_col))
 
         self.bot_right_row.pos = self.bot_right
