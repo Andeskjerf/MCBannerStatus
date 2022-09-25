@@ -15,7 +15,7 @@ REGULAR_FONT_PATH = ""
 # Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
 
-# Set to true to enable image rotation
+# Set to True to enable image rotation
 # Make sure to add images to the images folder!
 IMAGE_ROTATION = False
 
