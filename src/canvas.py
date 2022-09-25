@@ -87,10 +87,16 @@ class Canvas:
             self.bot_left_row.add(RowText("", self.font_r, WHITE))
 
         if description:
+
+            font = font_regular
+            if font_italic \
+                    and len(font_italic) > 0:
+                font = font_italic
+
             self.bot_left_row.add(
                 RowText(
                     description,
-                    ImageFont.truetype(font_italic, font_size),
+                    ImageFont.truetype(font, font_size),
                     WHITE
                 )
             )
