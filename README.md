@@ -119,7 +119,7 @@ WorkingDirectory=/path/to/MCBannerStatus
 ExecStart=bash /path/to/MCBannerStatus/run.sh
 ```
 
-#### `mcbannerstatus.timer`
+### `mcbannerstatus.timer`
 
 ```ini
 [Unit]
