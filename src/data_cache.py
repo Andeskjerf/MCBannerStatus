@@ -6,7 +6,8 @@ class DataCache:
 
     max_players: int = 0
     online_players: int = 0
-    description: str = None
+    name: str = None
+    motd: str = None
     favicon: str = None
     version: str = None
     active: bool = False
@@ -15,18 +16,20 @@ class DataCache:
 
     def __init__(
         self,
-        max_players,
-        online_players,
-        description,
-        favicon,
-        version,
-        active,
-        last_image,
-        last_update
+        max_players=0,
+        online_players=0,
+        name=None,
+        motd=None,
+        favicon=None,
+        version=None,
+        active=False,
+        last_image=None,
+        last_update=None
     ):
         self.max_players = max_players
         self.online_players = online_players
-        self.description = description
+        self.name = name
+        self.motd = motd
         self.favicon = favicon
         self.version = version
         self.active = active
@@ -53,7 +56,7 @@ class DataCache:
 
 class Cacher:
 
-    data: DataCache = DataCache(0, 0, None, None, None, False, None, None)
+    data: DataCache = DataCache()
     cache: str = None
 
     def __init__(self) -> None:
@@ -65,6 +68,11 @@ class Cacher:
         cache_dict.pop("last_image")
         data_dict.pop("last_image")
         return data_dict != cache_dict
+
+    def create_cache(self):
+        with open("cache.json", "w") as f:
+            self.cache = self.data.to_json()
+            f.write(self.cache)
 
     def write_cache(self):
         with open("cache.json", "w") as f:
@@ -80,10 +88,15 @@ class Cacher:
                 if len(self.cache) == 0:
                     raise Exception("Cache is empty")
 
+        # If the cache fails to load, create a new one
         except Exception as e:
             print(e)
-            with open("cache.json", "w") as f:
-                self.cache = self.data.to_json()
-                f.write(self.cache)
+            self.create_cache()
 
-        self.data = DataCache(**json.loads(self.cache))
+        # If the cache holds any invalid data,
+        # or if cache key values have changed,
+        # make sure to create a new cache to reflect these changes
+        try:
+            self.data = DataCache(**json.loads(self.cache))
+        except TypeError:
+            self.create_cache()

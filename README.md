@@ -1,9 +1,12 @@
 # MCBannerStatus
+
 Generates an image containing various data about a running Minecraft server.
+
+The program will use as the first line of your servers MOTD as the name to display on image.
 
 Intended to be run in combination with a web server to provide live updates to a served image.
 
-#### Examples
+## Example outputs
 
 ![1](https://user-images.githubusercontent.com/6963524/192139657-cc096c36-b3c4-481e-b0bb-9e2470e02120.png)
 ![2](https://user-images.githubusercontent.com/6963524/192139697-6f392719-030d-44ec-a69c-3df56f2a758d.png)
@@ -11,7 +14,7 @@ Intended to be run in combination with a web server to provide live updates to a
 
 ## Dependencies
 
- - Python 3.10>=
+- Python 3.10>=
 
 ## Getting started
 
@@ -20,14 +23,15 @@ git clone https://github.com/VladTheSheep/MCBannerStatus.git
 cd MCBannerStatus
 ./setup.sh
 ```
+
 The `setup.sh` script will setup the project for you.
 
- - Checks for a valid Python version
- - Creates a Python venv
- - Installs required dependencies
- - Creates `images`
- - Adds `src/conf.py`
- - Adds `run.sh`
+- Checks for a valid Python version
+- Creates a Python venv
+- Installs required dependencies
+- Creates `images`
+- Adds `src/conf.py`
+- Adds `run.sh`
 
 ## Configuring
 
@@ -102,9 +106,9 @@ Invoke with `--help` or no arguments to learn more.
 
 To run the program automatically, you can use systemd or whatever you prefer. Example systemd service and timer is provided below.
 
-#### `mcbannerstatus.service`
+### `mcbannerstatus.service`
 
-```
+```ini
 [Unit]
 Description="Updates Minecraft banner"
 After=network-online.target
@@ -117,7 +121,7 @@ ExecStart=bash /path/to/MCBannerStatus/run.sh
 
 #### `mcbannerstatus.timer`
 
-```
+```ini
 [Unit]
 Description=Timer for MCBannerStatus
 

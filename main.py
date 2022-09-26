@@ -51,7 +51,7 @@ def main():
         cache.data.active,
         status.get_status(),
         status.get_player_count(),
-        cache.data.description,
+        cache.data.name,
         cache.data.favicon,
         args.image_path,
         args.font_regular_path,

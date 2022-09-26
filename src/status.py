@@ -1,3 +1,4 @@
+import re
 from mcstatus import JavaServer
 
 from src.data_cache import DataCache
@@ -34,7 +35,7 @@ class Status:
             status = JavaServer(self.host, self.port).status()
             self.cache.max_players = status.players.max
             self.cache.online_players = status.players.online
-            self.cache.description = status.description
+            self.parse_description(status.description)
             self.cache.favicon = status.favicon.replace("data:image/png;base64,", "")
             self.cache.version = status.version.name
             self.cache.active = True
@@ -44,6 +45,17 @@ class Status:
             self.cache.max_players = 0
             self.cache.online_players = 0
             self.cache.active = False
+
+    # Split server MOTD by newline
+    # First line will be server name, second will act as the MOTD
+    def parse_description(self, desc) -> str:
+        split = desc.split("\n")
+        name = split[0]
+        motd = split[1]
+
+        # Strip formatting codes
+        self.cache.name = re.sub(r"§+.", "", name)
+        self.cache.motd = re.sub(r"§+.", "", motd)
 
     def get_player_count(self):
         if not self.cache.active:

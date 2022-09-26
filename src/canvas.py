@@ -40,7 +40,7 @@ class Canvas:
         active: bool,
         text_left: str,
         text_right: str,
-        description: str,
+        name: str,
         favicon: str,
         image_path: str,
         font_regular: str,
@@ -86,7 +86,7 @@ class Canvas:
             ))
             self.bot_left_row.add(RowText("", self.font_r, WHITE))
 
-        if description:
+        if name:
 
             font = font_regular
             if font_italic \
@@ -95,7 +95,7 @@ class Canvas:
 
             self.bot_left_row.add(
                 RowText(
-                    description,
+                    name,
                     ImageFont.truetype(font, font_size),
                     WHITE
                 )
