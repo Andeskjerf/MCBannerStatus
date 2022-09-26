@@ -2,7 +2,7 @@
 
 Generates an image containing various data about a running Minecraft server.
 
-The program will use as the first line of your servers MOTD as the name to display on image.
+The program will use the first line of your servers MOTD as the name to display on image.
 
 Intended to be run in combination with a web server to provide live updates to a served image.
 
