@@ -6,6 +6,12 @@ The program will use the first line of your servers MOTD as the name to display 
 
 Intended to be run in combination with a web server to provide live updates to a served image.
 
+## Familiar with Chunky and MCRcon?
+
+Then you might be interested in this!
+
+https://gist.github.com/VladTheSheep/92fd12273eb469ee184ebc639c00a20a
+
 ## Example outputs
 
 ![1](https://user-images.githubusercontent.com/6963524/192139657-cc096c36-b3c4-481e-b0bb-9e2470e02120.png)
