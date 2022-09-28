@@ -17,6 +17,7 @@ from src.conf import (
     SERVER_PORT,
     X_OFFSET,
     TARGET_PATH,
+    INTERVAL,
     IMAGE_ROTATION,
     IMAGE_ROTATION_INTERVAL
 )
@@ -33,6 +34,8 @@ class ArgumentHandler:
     x_offset: float = X_OFFSET or 64
     height: int = int(FIELD_HEIGHT) if FIELD_HEIGHT is not None else None
     opacity: float = FIELD_OPACITY if FIELD_OPACITY is not None else 0.5
+
+    interval: int = int(INTERVAL) if INTERVAL is not None else None
 
     image_path: str = IMAGE_PATH
     image_rotation: bool = IMAGE_ROTATION or False
@@ -67,9 +70,13 @@ class ArgumentHandler:
         if "--help" in self.args:
 
             print(f"Usage: {self.name} [options]\n"
-                  "    Paths:\n"
+                  "    Options:\n"
+                  "        --interval <sec>\t\tHow often should we check for updates & draw image, in seconds\n"
                   "        --images\t\t\tEnable image rotation using images folder\n"
-                  "        --interval <sec>\t\tHow often should the image be rotated out, in seconds\n"
+                  "        --rotation-interval <sec>\tHow often should the image be rotated out, in seconds\n"
+                  "        --force\t\t\t\tForce image to update\n"
+                  "\n"
+                  "    Paths:\n"
                   "        -b --image <path>\t\tPath to base image\n"
                   "        -r --font-regular <path>\tPath to regular font\n"
                   "        -i --font-italic <path>\t\tPath to italic font\n"
@@ -88,10 +95,9 @@ class ArgumentHandler:
                   "        --host <host>\t\t\tHost to connect to\n"
                   "        --port <port>\t\t\tPort to connect to\n"
                   "\n"
-                  "    --force\t\t\t\tForce image to update\n"
                   "    --help\t\t\t\tShow this help message\n"
                   "\n"
-                  "    Permanent options can be set in conf.py\n"
+                  "    Permanent options can be set in src/conf.py\n"
                   )
             exit()
 
@@ -132,6 +138,8 @@ class ArgumentHandler:
                 case "--port":
                     self.port = self.parse_int(self.next_arg(i), arg)
                 case "--interval":
+                    self.interval = self.parse_int(self.next_arg(i), arg)
+                case "--rotation-interval":
                     self.image_rotation_interval = self.parse_int(self.next_arg(i), arg)
                 case "--images":
                     self.image_rotation = True
