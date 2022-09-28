@@ -127,6 +127,9 @@ Type=simple
 Restart=always
 WorkingDirectory=/path/to/MCBannerStatus
 ExecStart=bash /path/to/MCBannerStatus/run.sh
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 Place the file in either `/etc/systemd/system/` or in your users systemd config `~/.config/systemd/user/`
