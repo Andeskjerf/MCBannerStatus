@@ -1,9 +1,21 @@
 # All of these can either be set here or via runtime arguments
 # If arguments are given, they'll override the respective values set here
+#
+# Using Chunky? See configuration at the bottom of this file
+# Chunky has to be configured from here, not from the runtime arguments
+
+############################################
+# Host configuration
+############################################
 
 # Can be left as is unless you want the status for a remote server
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 25565
+RCON_PORT = 25575
+
+############################################
+# Paths
+############################################
 
 # Path to save the output image
 TARGET_PATH = ""
@@ -15,6 +27,10 @@ REGULAR_FONT_PATH = ""
 # Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
 
+############################################
+# Schedule & image rotation
+############################################
+
 # How often we should check for updates, in seconds
 INTERVAL = 60
 
@@ -25,6 +41,10 @@ IMAGE_ROTATION = False
 # How often should the image be rotated out, in seconds
 # Only applies if image rotation is enabled
 IMAGE_ROTATION_INTERVAL = 900
+
+############################################
+# Image output configuration
+############################################
 
 # The offset between the edge of the image and the text
 X_OFFSET = 64
@@ -47,3 +67,41 @@ OFFLINE_TEXT = "Offline"
 
 # Text to show inplace of the player count if the server is unreachable / offline
 PLAYER_COUNT_OFFLINE_TEXT = "Connection error"
+
+############################################
+# Mod configuration
+############################################
+
+# If your server has the plugin/mod Player Events, you can set this to True
+# Mostly relevant if Chunky has been confgured
+# If Chunky is configured and Player Events is enabled, it'll notify users on join if there's a current render job
+PLAYER_EVENTS = False
+
+############################################
+# Chunky configuration
+############################################
+
+# Set to True to enable Chunky
+# Requires Chunky to be already setup!
+CHUNKY = False
+
+# Path to ChunkyLauncher.jar
+CHUNKY_JAR = ""
+
+# Path to Chunky's scenes
+CHUNKY_SCENES = ""
+
+# How many threads Chunky should use
+CHUNKY_THREADS = 4
+
+# Render all scenes at this SPP
+CHUNKY_SPP = 4096
+
+# Path to texture pack
+CHUNKY_TEXTURE = ""
+
+# Path to Minecraft server install
+MINECRAFT_PATH = ""
+
+# Link final images to this directory
+OUTPUT_DIR = ""
