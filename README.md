@@ -137,8 +137,8 @@ Place the file in either `/etc/systemd/system/` or in your users systemd config 
 systemctl daemon-reload
 
 # If installed as a system service
-systemctl enable --now mcbannerstatus.timer
+systemctl enable --now mcbannerstatus
 
 # If installed as a user service
-systemctl enable --now --user mcbannerstatus.timer
+systemctl enable --now --user mcbannerstatus
 ```
