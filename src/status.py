@@ -56,11 +56,13 @@ class Status:
     def parse_description(self, desc) -> str:
         split = desc.split("\n")
         name = split[0]
-        motd = split[1]
+        motd = split[1] if len(split) > 1 else None
 
         # Strip formatting codes
         self.cache.name = re.sub(r"§+.", "", name)
-        self.cache.motd = re.sub(r"§+.", "", motd)
+
+        if motd:
+            self.cache.motd = re.sub(r"§+.", "", motd)
 
     def get_player_count(self):
         if not self.cache.active:
