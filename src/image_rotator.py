@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import logging
 
 from src import utils
 from src.data_cache import DataCache
@@ -8,10 +9,11 @@ from src.data_cache import DataCache
 class ImageRotator:
 
     path: str = f"{os.getcwd()}/images"
-    files_path: list = []
+    files_path: list
 
-    cache: DataCache = None
-    enabled: bool = False
+    cache: DataCache
+
+    logger = None
 
     def __init__(
         self,
@@ -19,6 +21,8 @@ class ImageRotator:
         enabled,
         interval
     ) -> None:
+        self.logger = logging.getLogger()
+        self.files_path = []
         self.cache = cache
 
         if enabled:
@@ -33,17 +37,20 @@ class ImageRotator:
                 difference = (now - then).total_seconds()
 
                 if difference > interval:
+                    self.logger.debug("Image rotation interval reached, switching image")
                     self.set_files()
-                    self.set_image()
 
                     # No need to update the image if only a single image is present
                     if len(self.files_path) > 1:
+                        self.set_image()
                         self.cache.last_update = now
+                    else:
+                        self.logger.debug("Only a single image present, skipping image rotation")
 
-                else:
-                    print("Time left until next image rotation: \n"
-                          f"    {int(interval - difference)} second(s)\n"
-                          f"    {round((interval - difference) / 60, 1)} minute(s)\n")
+                # else:
+                #     print("Time left until next image rotation: \n"
+                #           f"    {int(interval - difference)} second(s)\n"
+                #           f"    {round((interval - difference) / 60, 1)} minute(s)\n")
 
     def set_files(self):
         for root, _, files in os.walk(self.path):
@@ -58,6 +65,7 @@ class ImageRotator:
         if len(self.files_path) == 0:
             print(f"No images found in {self.path}\n"
                   "Add some images to the images folder to use this feature")
+            self.logger.critical(f"No images found in {self.path} and image rotation is enabled, exiting")
             exit()
 
         try:

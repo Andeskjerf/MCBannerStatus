@@ -6,10 +6,12 @@ from src.data_cache import DataCache
 
 class Status:
 
-    cache: DataCache = None
+    cache: DataCache
 
     host: str
     port: int
+
+    server: JavaServer
 
     online_text: str
     offline_text: str
@@ -31,8 +33,11 @@ class Status:
         self.offline_text = offline_text
         self.player_failed_text = player_failed_text
 
+        self.server = JavaServer(self.host, self.port)
+
+    def fetch_status(self):
         try:
-            status = JavaServer(self.host, self.port).status()
+            status = self.server.status()
             self.cache.max_players = status.players.max
             self.cache.online_players = status.players.online
             self.parse_description(status.description)

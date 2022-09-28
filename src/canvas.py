@@ -32,8 +32,8 @@ class Canvas:
     bot_left: tuple
     bot_right: tuple
 
-    bot_left_row: TextRow = TextRow()
-    bot_right_row: TextRow = TextRow(direction=RowDirection.Left)
+    bot_left_row: TextRow
+    bot_right_row: TextRow
 
     def __init__(
         self,
@@ -50,6 +50,9 @@ class Canvas:
         opacity: float,
         field_height: int
     ):
+        self.bot_left_row = TextRow()
+        self.bot_right_row = TextRow(direction=RowDirection.Left)
+
         self.image = Image.open(image_path).convert("RGB")
         self.text_l = text_left
         self.text_r = text_right

@@ -1,3 +1,7 @@
+import schedule
+import time
+import logging
+
 from datetime import datetime
 from src import Canvas, Status
 from src.argument_handler import ArgumentHandler
@@ -5,20 +9,20 @@ from src.data_cache import Cacher
 from src.image_rotator import ImageRotator
 
 
-def main():
+logging.basicConfig(
+    filename="status.log",
+    format="%(asctime)s %(levelname)s %(message)s",
+    filemode="w",
+    level=logging.INFO
+)
 
-    args = ArgumentHandler()
+logger = logging.getLogger()
 
-    cache = Cacher()
 
-    status = Status(
-        cache.data,
-        args.host,
-        args.port,
-        args.online_text,
-        args.offline_text,
-        args.player_offline_text
-    )
+def update_image(args, cache, status):
+    logger.debug("Checking for status updates")
+
+    status.fetch_status()
 
     ImageRotator(
         cache.data,
@@ -30,12 +34,14 @@ def main():
     # make sure to remove it and trigger an update by setting last_update
     if not args.image_rotation \
             and cache.data.last_image:
+        logger.debug("Image rotation disabled, removing last image")
         cache.data.last_image = None
         cache.data.last_update = datetime.now()
 
     # Write data to cache only if it has changed
     updated = cache.has_changed()
     if updated:
+        logger.debug("Data changed, writing cache")
         cache.write_cache()
 
     # Replace whatever image has been given if image rotation is enabled
@@ -44,8 +50,8 @@ def main():
 
     # Only update the image if there's any new data
     if not updated and not args.force_update:
-        print("No new data, skipping")
-        exit()
+        logger.debug("No new data, skipping update")
+        return
 
     Canvas(
         cache.data.active,
@@ -61,6 +67,28 @@ def main():
         args.opacity,
         args.height
     ).save_image(args.target)
+
+
+def main():
+
+    args = ArgumentHandler()
+    cache = Cacher()
+    status = Status(
+        cache.data,
+        args.host,
+        args.port,
+        args.online_text,
+        args.offline_text,
+        args.player_offline_text
+    )
+
+    update_image(args, cache, status)
+
+    schedule.every(args.interval).seconds.do(update_image, args, cache, status)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 if __name__ == "__main__":
