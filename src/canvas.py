@@ -4,7 +4,7 @@ from PIL import Image, ImageFont
 
 from src.elements.row import RowDirection, RowImage, RowText, TextRow
 
-from .colors import GREEN, RED, WHITE, GREY, BLACK
+from src.colors import GREEN, RED, WHITE, GREY, BLACK
 
 _DIVIDE_BY_HEIGHT: int = 6
 

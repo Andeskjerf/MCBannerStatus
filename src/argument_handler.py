@@ -4,14 +4,23 @@ import sys
 from src import utils
 
 from src.conf import (
+    CHUNKY,
+    CHUNKY_JAR,
+    CHUNKY_SPP,
+    CHUNKY_TEXTURE,
+    CHUNKY_THREADS,
+    DELETE_DUMPS,
     FIELD_HEIGHT,
     FIELD_OPACITY,
     FONT_SIZE,
     IMAGE_PATH,
     ITALIC_FONT_PATH,
+    MINECRAFT_PATH,
     OFFLINE_TEXT,
     ONLINE_TEXT,
+    OUTPUT_DIR,
     PLAYER_COUNT_OFFLINE_TEXT,
+    PLAYER_EVENTS,
     REGULAR_FONT_PATH,
     SERVER_HOST,
     SERVER_PORT,
@@ -51,6 +60,18 @@ class ArgumentHandler:
     player_offline_text: str = PLAYER_COUNT_OFFLINE_TEXT or "NOT SET"
 
     force_update: bool = False
+
+    player_events = PLAYER_EVENTS or False
+
+    chunky_enabled = CHUNKY or False
+    chunky_jar = CHUNKY_JAR
+    chunky_threads = CHUNKY_THREADS
+    chunky_spp = CHUNKY_SPP
+    chunky_texture = CHUNKY_TEXTURE
+    chunky_minecraft = MINECRAFT_PATH
+    chunky_output = OUTPUT_DIR
+
+    delete_dumps = DELETE_DUMPS
 
     def __init__(self) -> None:
         self.name = re.findall(r"[^\/]+\b$", sys.argv[0])[0]

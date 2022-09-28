@@ -37,9 +37,12 @@ def is_font(path: str):
     return len(res) > 0
 
 
-def file_exists(path: str) -> None:
-    if not os.path.exists(path):
+def file_exists(path: str, throw=True) -> None:
+    if not os.path.exists(path) and throw:
         raise Exception("File does not exist: " + path)
+    elif not os.path.exists(path):
+        return False
+    return True
 
 
 def has_valid_extension(path: str) -> bool:

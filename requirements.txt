@@ -3,6 +3,7 @@ autopep8==1.7.0
 dnspython==2.2.1
 flake8==5.0.4
 mccabe==0.7.0
+mcrcon==0.7.0
 mcstatus==9.4.2
 Pillow==9.2.0
 pycodestyle==2.9.1

@@ -1,16 +1,27 @@
 import schedule
 import time
+import threading
 import logging
+import os
 
 from datetime import datetime
-from src import Canvas, Status
-from src.argument_handler import ArgumentHandler
-from src.data_cache import Cacher
-from src.image_rotator import ImageRotator
+from src import (
+    Canvas,
+    Status,
+    start_chunky,
+    Cacher,
+    ArgumentHandler,
+    ImageRotator
+)
 
+if not os.path.exists("logs"):
+    os.makedirs("logs")
+
+if not os.path.exists("images"):
+    os.makedirs("images")
 
 logging.basicConfig(
-    filename="status.log",
+    filename="logs/status.log",
     format="%(asctime)s %(levelname)s %(message)s",
     filemode="w",
     level=logging.INFO
@@ -69,6 +80,16 @@ def update_image(args, cache, status):
     ).save_image(args.target)
 
 
+def run_threaded(job_func, name=None, *args, **kwargs):
+    for job in threading.enumerate():
+        if job.name == name:
+            logger.debug(f"Job already running, skipping - Job: {name}")
+            return
+
+    job_thread = threading.Thread(target=job_func, name=name, args=args, kwargs=kwargs)
+    job_thread.start()
+
+
 def main():
 
     args = ArgumentHandler()
@@ -84,7 +105,18 @@ def main():
 
     update_image(args, cache, status)
 
-    schedule.every(args.interval).seconds.do(update_image, args, cache, status)
+    if args.chunky_enabled:
+        # schedule.every(args.interval).seconds.do(run_threaded, start_chunky, "chunky", args)
+        schedule.every().monday.at("00:00").do(run_threaded, start_chunky, "chunky", args)
+
+    schedule.every(args.interval).seconds.do(
+        run_threaded,
+        update_image,
+        "data_update",
+        args,
+        cache,
+        status
+    )
 
     while True:
         schedule.run_pending()

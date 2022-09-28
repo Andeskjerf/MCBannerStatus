@@ -74,7 +74,8 @@ PLAYER_COUNT_OFFLINE_TEXT = "Connection error"
 
 # If your server has the plugin/mod Player Events, you can set this to True
 # Mostly relevant if Chunky has been confgured
-# If Chunky is configured and Player Events is enabled, it'll notify users on join if there's a current render job
+# If Chunky is configured and Player Events is enabled,
+# it'll notify users on join if there's a current render job
 PLAYER_EVENTS = False
 
 ############################################
@@ -88,14 +89,15 @@ CHUNKY = False
 # Path to ChunkyLauncher.jar
 CHUNKY_JAR = ""
 
-# Path to Chunky's scenes
-CHUNKY_SCENES = ""
-
 # How many threads Chunky should use
 CHUNKY_THREADS = 4
 
 # Render all scenes at this SPP
 CHUNKY_SPP = 4096
+
+# If set to True, it'll delete render dumps before rendering!
+# This is to ensure that we re-render the scene
+DELETE_DUMPS = False
 
 # Path to texture pack
 CHUNKY_TEXTURE = ""
