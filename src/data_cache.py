@@ -75,8 +75,9 @@ class Cacher:
             f.write(self.cache)
 
     def write_cache(self):
+        self.cache = self.data.to_json()
         with open("cache.json", "w") as f:
-            f.write(self.data.to_json())
+            f.write(self.cache)
 
     def read_cache(self):
         try:
