@@ -15,7 +15,7 @@ REGULAR_FONT_PATH = ""
 # Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
 
-# How we should check for updates and redraw the image, in seconds
+# How often we should check for updates, in seconds
 INTERVAL = 60
 
 # Set to True to enable image rotation
