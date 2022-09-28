@@ -63,6 +63,9 @@ REGULAR_FONT_PATH = ""
 # Use italic fonts in certain situations, optional
 ITALIC_FONT_PATH = ""
 
+# How often we should check for updates, in seconds
+INTERVAL = 60
+
 # Set to True to enable image rotation
 # Make sure to add images to the images folder!
 IMAGE_ROTATION = False
@@ -93,6 +96,7 @@ OFFLINE_TEXT = "Offline"
 # Text to show inplace of the player count if the server is unreachable / offline
 PLAYER_COUNT_OFFLINE_TEXT = "Connection error"
 
+
 ```
 
 ## Running
@@ -108,42 +112,25 @@ python main.py "$@"
 
 Invoke with `--help` or no arguments to learn more.
 
-## Automatically updating the banner
+## Launching on boot
 
-To run the program automatically, you can use systemd or whatever you prefer. Example systemd service and timer is provided below.
+To run the program automatically on boot or after a crash (which hopefully shouldn't happen), you can use systemd or whatever you prefer. Example systemd service provided below.
 
 ### `mcbannerstatus.service`
 
 ```ini
 [Unit]
-Description="Updates Minecraft banner"
+Description="MCBannerStatus - Automatically update image with data from MC server"
 After=network-online.target
 
 [Service]
 Type=simple
+Restart=always
 WorkingDirectory=/path/to/MCBannerStatus
 ExecStart=bash /path/to/MCBannerStatus/run.sh
 ```
 
-### `mcbannerstatus.timer`
-
-```ini
-[Unit]
-Description=Timer for MCBannerStatus
-
-[Timer]
-OnBootSec=0min
-OnUnitActiveSec=5min
-
-[Install]
-WantedBy=multi-user.target
-```
-
-You can set how often you want to update the banner by changing `OnUnitActiveSec=5min`.
-
-Place both of these files in either `/etc/systemd/system/` or in your users systemd config `~/.config/systemd/user/`
-
-You can enable it by enabling and starting the timer.
+Place the file in either `/etc/systemd/system/` or in your users systemd config `~/.config/systemd/user/`
 
 ```Bash
 # Ensure the daemon is reloaded first! Append --user if installed as a user service
