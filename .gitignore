@@ -5,3 +5,4 @@ src/conf.py
 run.sh
 cache.json
 images
+status.log

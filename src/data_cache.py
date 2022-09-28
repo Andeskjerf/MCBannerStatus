@@ -4,15 +4,15 @@ import json
 
 class DataCache:
 
-    max_players: int = 0
-    online_players: int = 0
-    name: str = None
-    motd: str = None
-    favicon: str = None
-    version: str = None
-    active: bool = False
-    last_image: str = None
-    last_update: datetime = None
+    max_players: int
+    online_players: int
+    name: str
+    motd: str
+    favicon: str
+    version: str
+    active: bool
+    last_image: str
+    last_update: datetime
 
     def __init__(
         self,
