@@ -10,7 +10,7 @@ Intended to be run in combination with a web server to provide live updates to a
 
 Then you might be interested in this!
 
-https://gist.github.com/VladTheSheep/92fd12273eb469ee184ebc639c00a20a
+https://gist.github.com/Andeskjerf/92fd12273eb469ee184ebc639c00a20a
 
 ## Example outputs
 
